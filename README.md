@@ -47,7 +47,7 @@ then restart Forge. Or clone it into `extensions/`.
 
 - Forge Neo **2.29** (`neo` branch, commit 8a6bc1d), in daily use since October 2026.
 - Forge Neo **neo-2.30.1** (`neo` branch, commit ad60793, 21 October 2026):
-  loads, adds, pauses and removes jobs with no errors.
+  5 queued jobs ran one after another and landed in the gallery, with no errors.
 
 If your Forge is older and the extension does not load, update Forge first.
 
