@@ -1,0 +1,128 @@
+/* Prompt Queue: uses Gradio's own theme colours, so it follows Forge's light and dark mode. */
+#sdq-root {
+    --sdq-bg: var(--background-fill-primary, #fff);
+    --sdq-bg2: var(--background-fill-secondary, #f4f4f5);
+    --sdq-line: var(--border-color-primary, #e4e4e7);
+    --sdq-text: var(--body-text-color, #18181b);
+    --sdq-muted: var(--body-text-color-subdued, #71717a);
+    --sdq-accent: var(--color-accent, #f97316);
+    --sdq-red: #dc2626;
+    --sdq-green: #16a34a;
+    --sdq-blue: #2563eb;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--sdq-text);
+}
+
+.sdq-addrow { display: flex; gap: 6px; align-items: stretch; width: 100%; margin-top: 6px; }
+.sdq-addrow > button { flex: 1; min-height: 34px; }
+.sdq-addrow > input.sdq-count {
+    width: 56px; border: 1px solid var(--border-color-primary, #ccc); border-radius: 8px;
+    background: var(--input-background-fill, transparent); color: var(--body-text-color, inherit);
+    text-align: center; font-size: 14px;
+}
+.sdq-auto {
+    display: flex; align-items: center; gap: 4px; padding: 0 6px; cursor: pointer; white-space: nowrap;
+    font-size: 13px; color: var(--body-text-color, inherit);
+}
+/* Gradio's theme paints a white tick on a see-through box (invisible on a light page): use the browser's own box */
+.sdq-auto > input[type="checkbox"] {
+    -webkit-appearance: checkbox; appearance: auto; background-image: none; border: 0;
+    accent-color: var(--color-accent, #f97316); width: 16px; height: 16px; margin: 0; cursor: pointer;
+}
+.sdq-btn.sdq-busy { opacity: .6; cursor: progress; }
+
+.sdq-pill {
+    position: fixed; right: 16px; bottom: 16px; z-index: 1000;
+    padding: 8px 14px; border-radius: 999px; border: 1px solid var(--sdq-line);
+    background: var(--sdq-bg); color: var(--sdq-text); font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+}
+.sdq-pill-run { border-color: var(--sdq-accent); }
+.sdq-pill-paused { border-style: dashed; }
+
+.sdq-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 1001;
+    width: min(440px, 100vw); display: flex; flex-direction: column;
+    background: var(--sdq-bg); border-left: 1px solid var(--sdq-line);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, .18);
+    transform: translateX(105%); transition: transform .18s ease;
+}
+.sdq-drawer.sdq-open { transform: none; }
+.sdq-head { display: flex; align-items: center; gap: 8px; padding: 12px 14px 6px; }
+.sdq-title { margin: 0; flex: 1; font-size: 17px; }
+.sdq-summary { padding: 0 14px 8px; color: var(--sdq-muted); }
+.sdq-notice { margin: 0 14px 8px; padding: 8px 10px; border-radius: 8px; background: var(--sdq-bg2); border-left: 3px solid var(--sdq-accent); }
+.sdq-filters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 8px; }
+.sdq-search {
+    flex: 1 1 100%; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--sdq-line);
+    background: var(--sdq-bg2); color: var(--sdq-text); font-size: 14px;
+}
+.sdq-list { flex: 1; overflow-y: auto; padding: 0 14px 8px; }
+.sdq-foot { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--sdq-line); }
+.sdq-foot .sdq-btn { flex: 1; }
+.sdq-empty { padding: 28px 8px; text-align: center; color: var(--sdq-muted); }
+
+.sdq-btn, .sdq-chip {
+    padding: 5px 10px; border-radius: 8px; border: 1px solid var(--sdq-line);
+    background: var(--sdq-bg2); color: var(--sdq-text); cursor: pointer; font-size: 13px;
+}
+.sdq-btn:hover, .sdq-chip:hover { border-color: var(--sdq-accent); }
+.sdq-btn:focus-visible, .sdq-chip:focus-visible, .sdq-pill:focus-visible { outline: 2px solid var(--sdq-accent); outline-offset: 1px; }
+.sdq-chip.sdq-on { background: var(--sdq-accent); border-color: var(--sdq-accent); color: #fff; }
+.sdq-icon { padding: 5px 9px; }
+.sdq-danger:hover { border-color: var(--sdq-red); color: var(--sdq-red); }
+.sdq-armed { background: var(--sdq-red); border-color: var(--sdq-red); color: #fff; }
+
+.sdq-card {
+    border: 1px solid var(--sdq-line); border-radius: 10px; padding: 10px; margin-bottom: 8px;
+    background: var(--sdq-bg);
+}
+.sdq-card.sdq-running { border-color: var(--sdq-accent); }
+.sdq-card.sdq-waiting { cursor: grab; }
+.sdq-card.sdq-dragging { opacity: .4; }
+.sdq-card.sdq-dropzone { border-top: 3px solid var(--sdq-accent); }
+.sdq-card-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 4px; }
+.sdq-badge { padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; background: var(--sdq-muted); }
+.sdq-b-running { background: var(--sdq-accent); }
+.sdq-b-done { background: var(--sdq-green); }
+.sdq-b-failed { background: var(--sdq-red); }
+.sdq-b-waiting { background: var(--sdq-blue); }
+.sdq-tab, .sdq-pos { font-size: 12px; color: var(--sdq-muted); }
+.sdq-meta, .sdq-model, .sdq-time { font-size: 12px; color: var(--sdq-muted); }
+.sdq-meta { margin-left: auto; }
+.sdq-card > .sdq-meta { margin-left: 0; }
+.sdq-prompt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
+.sdq-bar { height: 6px; border-radius: 3px; background: var(--sdq-bg2); margin: 6px 0 2px; overflow: hidden; }
+.sdq-fill { height: 100%; background: var(--sdq-accent); transition: width .4s; }
+.sdq-preview { display: block; max-width: 100%; max-height: 220px; margin-top: 6px; border-radius: 8px; }
+.sdq-thumbs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; align-items: center; }
+.sdq-thumb { width: 72px; height: 72px; object-fit: cover; border-radius: 6px; cursor: zoom-in; border: 1px solid var(--sdq-line); }
+.sdq-more { font-size: 12px; color: var(--sdq-muted); }
+.sdq-err { margin-top: 6px; font-size: 13px; color: var(--sdq-red); }
+.sdq-note { margin-top: 4px; font-size: 12px; color: var(--sdq-muted); }
+.sdq-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+.sdq-toasts { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 1003; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.sdq-toast {
+    display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-radius: 10px;
+    background: #27272a; color: #fafafa; box-shadow: 0 4px 16px rgba(0, 0, 0, .25); max-width: 90vw;
+}
+.sdq-toast.sdq-error { background: var(--sdq-red); }
+.sdq-undo { background: transparent; color: inherit; border-color: rgba(255, 255, 255, .5); }
+
+.sdq-viewer { position: fixed; inset: 0; z-index: 1002; background: rgba(0, 0, 0, .88); display: flex; align-items: center; justify-content: center; }
+.sdq-viewer-img { max-width: 92vw; max-height: 88vh; object-fit: contain; }
+.sdq-nav { position: absolute; background: rgba(0, 0, 0, .5); color: #fff; border-color: rgba(255, 255, 255, .3); font-size: 22px; padding: 6px 14px; }
+.sdq-prev { left: 16px; top: 50%; }
+.sdq-next { right: 16px; top: 50%; }
+.sdq-vclose { right: 16px; top: 16px; }
+.sdq-viewer-count { position: absolute; bottom: 16px; color: #fff; font-size: 14px; }
+
+@media (max-width: 600px) {
+    .sdq-pill { right: 12px; bottom: 12px; }
+    .sdq-btn, .sdq-chip { min-height: 40px; }
+}
+
+/* Forge's hidden helper button: the page presses it to put a finished queued job in the gallery */
+.sdq-hidden, #txt2img_sdq_show, #img2img_sdq_show { display: none !important; }
