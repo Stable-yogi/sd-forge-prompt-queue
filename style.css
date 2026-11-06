@@ -119,6 +119,13 @@
 .sdq-vclose { right: 16px; top: 16px; }
 .sdq-viewer-count { position: absolute; bottom: 16px; color: #fff; font-size: 14px; }
 
+/* Docked: the queue is a sidebar and the page is pushed to the left (screens 1000 px and wider) */
+/* Gradio sets padding:0 inline on <body>, so the page is pushed with the app element's margin */
+body.sdq-docked gradio-app { margin-right: min(440px, 36vw); }
+.sdq-drawer.sdq-dock { width: min(440px, 36vw); box-shadow: none; transition: none; }
+body.sdq-docked .sdq-pill { display: none; }
+.sdq-dockbtn { padding: 5px 9px; }
+
 @media (max-width: 600px) {
     .sdq-pill { right: 12px; bottom: 12px; }
     .sdq-btn, .sdq-chip { min-height: 40px; }

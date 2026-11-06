@@ -9,6 +9,7 @@
     let firstBoot = null; // Forge start stamp seen by this page
     let staleWarned = false;
     let open = false;
+    let dock = false; // docked sidebar mode (page moves aside)
     let filter = "all";
     let search = "";
     let pollTimer = null;
@@ -104,7 +105,7 @@
         return e;
     }
 
-    let root, pill, drawer, list, summaryLine, pauseBtn, noticeBox, toastBox, searchInput, filterBar;
+    let root, pill, drawer, dockBtn, list, summaryLine, pauseBtn, noticeBox, toastBox, searchInput, filterBar;
 
     function build() {
         if (document.getElementById("sdq-root")) return;
@@ -125,6 +126,10 @@
         pauseBtn.type = "button";
         pauseBtn.addEventListener("click", togglePause);
         head.appendChild(pauseBtn);
+        dockBtn = el("button", "sdq-btn sdq-icon sdq-dockbtn", "⭲");
+        dockBtn.type = "button";
+        dockBtn.addEventListener("click", () => setDock(!dock));
+        head.appendChild(dockBtn);
         const close = el("button", "sdq-btn sdq-icon", "✕");
         close.type = "button";
         close.title = "Close (Esc)";
@@ -175,6 +180,8 @@
         document.body.appendChild(root);
 
         document.addEventListener("keydown", onKey, true);
+        window.addEventListener("resize", applyDock);
+        setDock(lsGet("dock", false), true);
         setOpen(lsGet("open", false));
     }
 
@@ -461,7 +468,27 @@
         open = !!v;
         lsSet("open", open);
         if (drawer) drawer.classList.toggle("sdq-open", open);
+        applyDock();
         if (open) refresh();
+    }
+
+    // Dock: the open queue becomes a sidebar and the page is pushed to the left (wide screens only)
+    const DOCK_MIN_WIDTH = 1000;
+    function setDock(v, quiet) {
+        dock = !!v;
+        if (!quiet) lsSet("dock", dock);
+        applyDock();
+    }
+    function applyDock() {
+        const on = dock && open && window.innerWidth >= DOCK_MIN_WIDTH;
+        document.body.classList.toggle("sdq-docked", on);
+        if (drawer) drawer.classList.toggle("sdq-dock", on);
+        if (dockBtn) {
+            dockBtn.classList.toggle("sdq-on", dock);
+            dockBtn.title = dock ? "Docked: the page moves aside. Click to float over the page"
+                : "Float over the page. Click to dock as a sidebar (the page moves aside)";
+            dockBtn.setAttribute("aria-pressed", dock ? "true" : "false");
+        }
     }
 
     function visibleJobs() {

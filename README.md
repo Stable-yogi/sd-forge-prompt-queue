@@ -19,6 +19,11 @@ away and queue the next one. Jobs run one after another in the background.
 - Keyboard: **Ctrl+Shift+Enter** adds to the queue, **Alt+Q** opens the queue,
   **Esc** closes it.
 - Queue panel (the "Queue" button, bottom right):
+  - **Dock** button (next to Pause): turns the queue into a sidebar that pushes the
+    page to the left, so the queue and the page are visible together (made for
+    ultrawide screens). Click again to float over the page. Remembered between
+    visits. Docking only applies on screens 1000 px wide and up; narrower screens
+    always float.
   - live progress bar, time left and live preview of the running job
   - pause / resume the whole queue (the running job always finishes)
   - stop the running job
